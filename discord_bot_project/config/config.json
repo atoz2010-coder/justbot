@@ -1,0 +1,12 @@
+{
+    "token": "MTMwMzY4NjI0NzIzOTI1ODEzMg.GWFwiS.jS8hTEZ_SnA5T3Du6niaS8xb_kifHp72cKsL_A",
+    "prefix": "?",
+    "admin_role_id": "1303687103309418546",
+    "unverified_role_id": "1303607575950000220",
+    "music_channel_id": "1303619156985511966",
+    "guild_id": "1297817182293594175",
+    "discord_client_id": "1303686247239258132",
+    "discord_client_secret": "REUASrqzzn67X_EN2FvEb8tkNn8rSOvy",
+    "discord_redirect_uri": "http://localhost:5000/callback",
+    "bank_start_balance": 31000000
+}

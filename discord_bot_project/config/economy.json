@@ -1,8 +1,0 @@
-{
-    "currency_symbol": "원",
-    "starting_balance": 31000000,
-    "transaction_fee": 20,
-    "daily_bonus": 1000000,
-    "min_transfer_amount": 10,
-    "max_transfer_amount": 9999999999
-}

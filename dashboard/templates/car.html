@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}차량 데이터{% endblock %}
+{% block content %}
+    <h2>차량 등록 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>신청 ID</th>
+                <th>사용자 이름</th>
+                <th>차량 이름</th>
+                {# <th>차량 종류</th> #} {# <-- 이 줄을 삭제합니다. #}
+                <th>등록세</th>
+                <th>상태</th>
+                <th>신청일</th>
+                <th>처리자</th>
+                <th>처리일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for car in cars %}
+            <tr>
+                <td>{{ car.id }}</td>
+                <td>{{ car.username }}</td>
+                <td>{{ car.car_name }}</td>
+                {# <td>{{ car.car_type }}</td> #} {# <-- 이 줄을 삭제합니다. #}
+                <td>{{ "{:,.0f}".format(car.registration_tax) }}원</td>
+                <td>{{ car.status }}</td>
+                <td>{{ (datetime.datetime.fromisoformat(car.requested_at) + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S') if car.requested_at else 'N/A' }}</td>
+                <td>{{ car.approved_by if car.status == '승인됨' else (car.rejected_by if car.status == '거부됨' else 'N/A') }}</td>
+                <td>
+                    {% set processed_date = (datetime.datetime.fromisoformat(car.approved_at) if car.approved_at else None) or (datetime.datetime.fromisoformat(car.rejected_at) if car.rejected_at else None) %}
+                    {{ (processed_date + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S') if processed_date else 'N/A' }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">차량 등록 정보가 없습니다.</td> {# 컬럼 수 조정 (차량 종류, 구매일 제거로 인해 9 -> 7) #}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

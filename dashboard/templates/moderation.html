@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}서버 관리 데이터{% endblock %}
+{% block content %}
+    <h2>사용자 경고 내역</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>사용자 ID</th>
+                <th>사용자 이름</th>
+                <th>총 경고 횟수</th>
+                <th>경고 상세</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for warning_doc in warnings %}
+            <tr>
+                <td>{{ warning_doc.user_id }}</td>
+                <td>{{ warning_doc.username }}</td>
+                <td>{{ warning_doc.warnings|length if warning_doc.warnings else 0 }}</td>
+                <td>
+                    {% if warning_doc.warnings %}
+                        <ul>
+                        {% for warning in warning_doc.warnings %}
+                            <li>
+                                <strong>사유:</strong> {{ warning.reason }}<br>
+                                <strong>관리자:</strong> {{ warning.moderator_name }}<br>
+                                <strong>시간:</strong> {{ (warning.timestamp + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S') if warning.timestamp else 'N/A' }}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        경고 없음
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">경고 정보가 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2 style="margin-top: 40px;">티켓 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>티켓 ID</th>
+                <th>사용자 이름</th>
+                <th>서버 ID</th>
+                <th>채널 ID</th>
+                <th>상태</th>
+                <th>개설 사유</th>
+                <th>개설 시간</th>
+                <th>종료 시간</th>
+                <th>종료자</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.username }}</td>
+                <td>{{ ticket.guild_id }}</td>
+                <td>{{ ticket.channel_id }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.reason }}</td>
+                <td>{{ (ticket.opened_at + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S') if ticket.opened_at else 'N/A' }}</td>
+                <td>{{ (ticket.closed_at + timedelta(hours=9)).strftime('%Y-%m-%d %H:%M:%S') if ticket.closed_at else 'N/A' }}</td>
+                <td>{{ ticket.closed_by if ticket.closed_by else 'N/A' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">티켓 정보가 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

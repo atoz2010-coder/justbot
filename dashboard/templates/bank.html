@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}은행 데이터{% endblock %}
+{% block content %}
+    <h2>은행 계좌 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>사용자 ID</th>
+                <th>사용자 이름</th>
+                <th>잔액 (원)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in bank_accounts %}
+            <tr>
+                <td>{{ account.user_id }}</td>
+                <td>{{ account.username }}</td>
+                <td>{{ "{:,.0f}".format(account.balance) }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">은행 계좌 정보가 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

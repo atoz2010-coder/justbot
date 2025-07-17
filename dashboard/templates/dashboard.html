@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}통합 대시보드{% endblock %}
+{% block content %}
+    <h2>봇 운영 상태</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>봇 이름</th>
+                <th>상태</th>
+                <th>마지막 하트비트 (KST)</th>
+                <th>메시지</th>
+                <th>서버 개수</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for status in bot_statuses %}
+            <tr>
+                <td>{{ status.bot_name }}</td>
+                <td style="color: {% if status.status == 'Online' %}green{% else %}red{% endif %};">
+                    {{ status.status }}
+                </td>
+                <td>{{ status.last_heartbeat_kst }}</td>
+                <td>{{ status.message }}</td>
+                <td>{{ status.guild_count }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">봇 상태 정보가 없습니다.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p>각 봇의 상세 데이터는 상단 메뉴에서 확인하세요.</p>
+{% endblock %}
